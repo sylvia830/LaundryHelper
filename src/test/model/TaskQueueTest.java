@@ -22,6 +22,7 @@ public class TaskQueueTest {
 
     @BeforeEach
     public void setup(){
+
         tq = new TaskQueue();
     }
 
