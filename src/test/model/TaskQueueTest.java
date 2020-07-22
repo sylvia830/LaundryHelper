@@ -1,15 +1,19 @@
 package model;
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.LinkedList;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static java.lang.System.out;
+import static org.junit.jupiter.api.Assertions.*;
 
 
-//
 public class TaskQueueTest {
     TaskQueue tq;
     LaundryTask lt = new LaundryTask(1);
@@ -25,12 +29,11 @@ public class TaskQueueTest {
     LaundryTask lt10 = new LaundryTask(2);
 
 
-
-
     @BeforeEach
     public void setup(){
         tq = new TaskQueue();
     }
+
 
     @Test
     public void testAddTask(){
@@ -65,9 +68,16 @@ public class TaskQueueTest {
         tq.addTask(lt8);
         tq.addTask(lt9);
         assertFalse(tq.isAvailable());
-
-
-
-
     }
+
+    @Test
+    public void testPrintServiceType(){
+        tq.printServiceType();
+        assertEquals(tq.getTest(),-1);
+        tq.addTask(lt);
+        tq.printServiceType();;
+        assertEquals(tq.getTest(),1);
+        assertEquals(lt.getServiceType(), 1);
+    }
+
 }

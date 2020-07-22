@@ -7,6 +7,7 @@ import java.util.LinkedList;
 public class TaskQueue {
     public static final int MAX_NUM = 10;
     public int serviceType;
+    public int test;
     LaundryTask lt = new LaundryTask(serviceType);
     LinkedList<LaundryTask> taskQueue;
 
@@ -40,15 +41,20 @@ public class TaskQueue {
     //EFFECTS: prints out the service type of all the laundry tasks in taskQueue
     public void printServiceType() {
         if (taskQueue.size() == 0) {
+            test = -1;
             System.out.println("There is no ongoing task. Please press a to begin.");
         } else {
             System.out.println("The types of services in use right now are  ");
+            test = 1;
             for (LaundryTask lt : taskQueue) {
                 lt.getServiceType();
                 System.out.println(lt.getServiceType());
             }
         }
+    }
 
+    public int getTest() {
+        return test;
     }
 
 

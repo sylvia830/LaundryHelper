@@ -98,6 +98,7 @@ public class LaundryHelper {
         }
     }
 
+
     //EFFECTS: print out a list of the service used by the customers
     private void printServiceType() {
 
