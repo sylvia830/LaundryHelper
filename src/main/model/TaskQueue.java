@@ -4,6 +4,8 @@ package model;
 import java.util.LinkedList;
 
 //a task queue that will be added with laundry task as long as its size is less than MAX_NUM
+//NOTE: assume there are only MAX_NUM machines. Every one of these machines support washing and drying as well,
+//      but the two functions of the same machine cannot be used at the same time.
 public class TaskQueue {
     public static final int MAX_NUM = 10;
     public int serviceType;
@@ -38,27 +40,22 @@ public class TaskQueue {
     }
 
 
-    //EFFECTS: prints out the service type of all the laundry tasks in taskQueue
-    public void printServiceType() {
+
+
+    //EFFECTS: returns true if there is no task in the queue, otherwise false
+    public boolean noTask() {
         if (taskQueue.size() == 0) {
-            test = -1;
-            System.out.println("There is no ongoing task. Please press a to begin.");
+            return true;
         } else {
-            System.out.println("The types of services in use right now are  ");
-            test = 1;
-            for (LaundryTask lt : taskQueue) {
-                lt.getServiceType();
-                System.out.println(lt.getServiceType());
-            }
+            return false;
         }
-    }
 
-    public int getTest() {
-        return test;
     }
-
 
 }
+
+
+
 
 
 

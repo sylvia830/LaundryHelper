@@ -54,7 +54,7 @@ public class TaskQueueTest {
     }
 
     @Test
-    public void TestIsAvailable(){
+    public void testIsAvailable(){
         assertTrue(tq.isAvailable());
         tq.addTask(lt);
         assertTrue(tq.isAvailable());
@@ -71,13 +71,17 @@ public class TaskQueueTest {
     }
 
     @Test
-    public void testPrintServiceType(){
-        tq.printServiceType();
-        assertEquals(tq.getTest(),-1);
+    public void testNoTask(){
+        assertTrue(tq.noTask());
         tq.addTask(lt);
-        tq.printServiceType();;
-        assertEquals(tq.getTest(),1);
-        assertEquals(lt.getServiceType(), 1);
+        assertFalse(tq.noTask());
+        tq.addTask(lt1);
+        tq.addTask(lt2);
+        assertFalse(tq.noTask());
     }
+
+
+
+
 
 }

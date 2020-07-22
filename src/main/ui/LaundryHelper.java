@@ -3,6 +3,8 @@ package ui;
 import model.LaundryCard;
 import model.LaundryTask;
 import model.TaskQueue;
+
+import java.util.LinkedList;
 import java.util.Scanner;
 
 import static model.LaundryCard.AMOUNT;
@@ -11,6 +13,7 @@ import static model.TaskQueue.MAX_NUM;
 //laundry helper application
 public class LaundryHelper {
     TaskQueue tq = new TaskQueue();
+    LinkedList<LaundryTask> taskQueue = new LinkedList<LaundryTask>();
     private Scanner input;
     LaundryCard card = new LaundryCard(0);
     LaundryTask lt;
@@ -47,7 +50,6 @@ public class LaundryHelper {
     }
 
 
-
     //NOTE: credits to the sample Teller app
     //EFFECTS: display menu of options to user
     private void displayMenu() {
@@ -56,7 +58,7 @@ public class LaundryHelper {
         System.out.println("\nc -> Check balance");
         System.out.println("\np -> Pay");
         System.out.println("\ns -> Start");
-        System.out.println("\nt -> Check the list of ongoing task (1 for washing, 2 for drying)");
+        System.out.println("\nt -> Check the list of ongoing task (1 for washing, 0 for drying)");
 
     }
 
@@ -72,7 +74,6 @@ public class LaundryHelper {
         } else if (command.equals("p")) {
             doPay();
         } else if (command.equals("s")) {
-            //tq.isAvailable();
             checkAvailability();
         } else if (command.equals("t")) {
             printServiceType();
@@ -87,10 +88,11 @@ public class LaundryHelper {
     private void checkAvailability() {
         if (tq.isAvailable()) {
             System.out.println("You may start now!");
-            System.out.println("Choose the type of service you want to use (1 for washing machine, 2 for dryer): ");
+            System.out.println("Choose the type of service you want to use (1 for washing machine, 0 for dryer): ");
             int serviceType = input.nextInt();
             lt = new LaundryTask(serviceType);
             tq.addTask(lt);
+            taskQueue.add(lt);
             System.out.println("Please press p to proceed.");
 
         } else {
@@ -101,11 +103,16 @@ public class LaundryHelper {
 
     //EFFECTS: print out a list of the service used by the customers
     private void printServiceType() {
-
-        tq.printServiceType();
+        if (tq.noTask()) {
+            System.out.println("There is no ongoing task. Please press 's' to begin.");
+        } else {
+            System.out.println("The types of services in use right now are  ");
+            for (LaundryTask lt: taskQueue) {
+                System.out.println(lt.getServiceType());
+            }
+        }
 
     }
-
 
 
     //MODIFIES: this
