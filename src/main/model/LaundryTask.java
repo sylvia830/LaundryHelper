@@ -9,6 +9,7 @@ public class LaundryTask  {
 
 
     public LaundryTask(int serviceType) {
+        //LaundryTask lt = new LaundryTask(serviceType);
         this.serviceType = serviceType;
     }
 

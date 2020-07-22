@@ -7,13 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LaundryTaskTest {
 
-    LaundryTask lt;
+    LaundryTask lt = new LaundryTask(0);
     LaundryTask lt1 = new LaundryTask(1);
 
-    @BeforeEach
-    public void setup(){
-        lt = new LaundryTask(0);
-    }
 
     @Test
     public void testGetServiceType(){
