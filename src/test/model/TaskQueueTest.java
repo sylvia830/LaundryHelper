@@ -1,16 +1,7 @@
 package model;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.LinkedList;
-
-import static java.lang.System.out;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -79,9 +70,5 @@ public class TaskQueueTest {
         tq.addTask(lt2);
         assertFalse(tq.noTask());
     }
-
-
-
-
 
 }
