@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import static model.LaundryCard.AMOUNT;
-import static model.TaskQueue.MAX_NUM;
+
 
 //laundry helper application
 public class LaundryHelper {
@@ -58,7 +58,8 @@ public class LaundryHelper {
         System.out.println("\nc -> Check balance");
         System.out.println("\np -> Pay");
         System.out.println("\ns -> Start");
-        System.out.println("\nt -> Check the list of ongoing task (1 for washing, 0 for drying)");
+        System.out.println("\nm -> Check the list of unavailable machines");
+        System.out.println("\nq -> Quit");
 
     }
 
@@ -75,8 +76,8 @@ public class LaundryHelper {
             doPay();
         } else if (command.equals("s")) {
             checkAvailability();
-        } else if (command.equals("t")) {
-            printServiceType();
+        } else if (command.equals("m")) {
+            printMachineID();
         } else {
             System.out.println("selection not valid");
         }
@@ -84,34 +85,46 @@ public class LaundryHelper {
     }
 
     //MODIFIES: this
-    //EFFECTS: check if there are available machines right now and if there is enter the type of service
+    //EFFECTS: check if there are available machines right now and if there is, choose a machine
     private void checkAvailability() {
         if (tq.isAvailable()) {
             System.out.println("You may start now!");
-            System.out.println("Choose the type of service you want to use (1 for washing machine, 0 for dryer): ");
-            int serviceType = input.nextInt();
-            lt = new LaundryTask(serviceType);
+            System.out.println("Choose the machine you want to use: ");
+            System.out.println("(washing machine ID: 1-7, dryer ID: 8-10)");
+            int machineID = input.nextInt();
+            lt = new LaundryTask(machineID);
+            if (!(taskQueue.size() == 0)) {
+                for (LaundryTask lt : taskQueue) {
+                    if (lt.machineID == machineID) {
+                        System.out.println("The machine of your choice is not available right now. "
+                                + "Please choose another one or come back later!");
+                        taskQueue.removeLast();
+                        tq.remove();
+                    }
+                }
+            }
+            System.out.println("Please press 'p' to proceed if the machine of your choice is available, "
+                    + "otherwise press 's' to choose again or 'q' to quit.");
             tq.addTask(lt);
             taskQueue.add(lt);
-            System.out.println("Please press p to proceed.");
 
         } else {
             System.out.println("The machines are occupied. Please swing by later!");
         }
+
     }
 
 
-    //EFFECTS: print out a list of the service used by the customers
-    private void printServiceType() {
+    //EFFECTS: print out a list of the unavailable machines
+    private void printMachineID() {
         if (tq.noTask()) {
             System.out.println("There is no ongoing task. Please press 's' to begin.");
         } else {
-            System.out.println("The types of services in use right now are  ");
-            for (LaundryTask lt: taskQueue) {
-                System.out.println(lt.getServiceType());
+            System.out.println("The machines in use right now are  ");
+            for (LaundryTask lt : taskQueue) {
+                System.out.println(lt.getMachineID());
             }
         }
-
     }
 
 
@@ -135,7 +148,6 @@ public class LaundryHelper {
     //MODIFIES: this
     //EFFECTS: add value to the current balance
     private void doAddValue() {
-        //LaundryCard card = new LaundryCard(0);
         System.out.println("Enter an amount to deposit (in cents):");
         int num = input.nextInt();
 
@@ -150,7 +162,7 @@ public class LaundryHelper {
 
     //EFFECTS: print current balance of the laundry card
     private void printBalance(LaundryCard card) {
-        System.out.println("balance = " + card.getBalance());
+        System.out.println("balance = ¢" + card.getBalance());
     }
 
 

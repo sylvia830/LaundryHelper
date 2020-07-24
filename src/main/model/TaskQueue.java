@@ -4,13 +4,10 @@ package model;
 import java.util.LinkedList;
 
 //a task queue that will be added with laundry task as long as its size is less than MAX_NUM
-//NOTE: assume there are only MAX_NUM machines. Every one of these machines support washing and drying as well,
-//      but the two functions of the same machine cannot be used at the same time.
 public class TaskQueue {
     public static final int MAX_NUM = 10;
-    public int serviceType;
-    public int test;
-    LaundryTask lt = new LaundryTask(serviceType);
+    public int machineID;
+    LaundryTask lt = new LaundryTask(machineID);
     LinkedList<LaundryTask> taskQueue;
 
     //EFFECTS: a constructor that creates an empty queue
@@ -40,8 +37,6 @@ public class TaskQueue {
     }
 
 
-
-
     //EFFECTS: returns true if there is no task in the queue, otherwise false
     public boolean noTask() {
         if (taskQueue.size() == 0) {
@@ -49,8 +44,21 @@ public class TaskQueue {
         } else {
             return false;
         }
-
     }
+
+
+    //REQUIRES: the queue cannot be empty
+    //MODIFIES: this
+    //EFFECTS: removes the last added task
+    public boolean remove() {
+        if (taskQueue.size() == 0) {
+            return false;
+        } else {
+            taskQueue.removeLast();
+            return true;
+        }
+    }
+
 
 }
 

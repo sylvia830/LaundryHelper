@@ -2,19 +2,21 @@
 package model;
 
 
-// a laundry task with a service type indicating the type of service the user uses,
+// a laundry task with a machineID indicating the exact machine the user uses,
 // the task is added to the task queue if there's available machine.
 public class LaundryTask  {
-    public int serviceType;
+    public int machineID;
 
 
-    public LaundryTask(int serviceType) {
-        //LaundryTask lt = new LaundryTask(serviceType);
-        this.serviceType = serviceType;
+    //a constructor that creates a new laundry task
+    public LaundryTask(int machineID) {
+        this.machineID = machineID;
     }
 
-    public int getServiceType() {
-        return serviceType;
+
+    //EFFECTS: return the machineID of the given laundry task
+    public int getMachineID() {
+        return machineID;
     }
 
 }

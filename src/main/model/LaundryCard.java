@@ -1,8 +1,10 @@
 package model;
 
+// a laundry card that enables users to add value, pay for services and check balance on account
 public class LaundryCard {
 
     //Note that the fees and balance are measured in terms of cent
+    //Note that washing service fee and drying service fee are the same at AMOUNT
     public int initialBalance;
     public int balance;
     public static int AMOUNT = 125;
@@ -15,6 +17,7 @@ public class LaundryCard {
         balance = initialBalance + balance;
     }
 
+    //Note that the service fee for washing and drying is the same at AMOUNT
     //MODIFIES: this
     //EFFECTS: pay for the laundry service: less fees against the balance
     public void payFees() {
@@ -22,6 +25,7 @@ public class LaundryCard {
     }
 
 
+    //REQUIRES: num > 0
     //MODIFIES: this
     //EFFECTS: add value to laundry card
     public void addValue(int num) {

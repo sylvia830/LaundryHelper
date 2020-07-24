@@ -1,6 +1,5 @@
 package model;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,8 +12,8 @@ public class LaundryTaskTest {
 
     @Test
     public void testGetServiceType(){
-        assertEquals(lt.getServiceType(),0);
-        assertEquals(lt1.getServiceType(), 1);
+        assertEquals(lt.getMachineID(),0);
+        assertEquals(lt1.getMachineID(), 1);
 
     }
 }
