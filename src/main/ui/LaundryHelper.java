@@ -26,7 +26,7 @@ public class LaundryHelper {
     }
 
 
-    ////NOTE: credits to the sample Teller app
+    //NOTE: credits to the sample Teller app
     //MODIFIES: this
     //EFFECTS: processes user input
     private void runLaundryHelper() {
@@ -91,6 +91,8 @@ public class LaundryHelper {
             System.out.println("You may start now!");
             System.out.println("Choose the machine you want to use: ");
             System.out.println("(washing machine ID: 1-7, dryer ID: 8-10)");
+            System.out.println("Note: if there is no further message after your input, "
+                    + "then your choice is available. Please press 'p' to proceed.");
             int machineID = input.nextInt();
             lt = new LaundryTask(machineID);
             if (!(taskQueue.size() == 0)) {
@@ -103,8 +105,6 @@ public class LaundryHelper {
                     }
                 }
             }
-            System.out.println("Please press 'p' to proceed if the machine of your choice is available, "
-                    + "otherwise press 's' to choose again or 'q' to quit.");
             tq.addTask(lt);
             taskQueue.add(lt);
 
