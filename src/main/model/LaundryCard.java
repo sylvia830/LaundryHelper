@@ -1,7 +1,12 @@
 package model;
 
+import persistence.Reader;
+import persistence.Saveable;
+
+import java.io.PrintWriter;
+
 // a laundry card that enables users to add value, pay for services and check balance on account
-public class LaundryCard {
+public class LaundryCard  {
 
     //Note that the fees and balance are measured in terms of cent
     //Note that washing service fee and drying service fee are the same at AMOUNT
@@ -11,7 +16,7 @@ public class LaundryCard {
 
     //EFFECTS: a constructor that creates a new laundry card
     public LaundryCard(int initialBalance) {
-       // LaundryCard card = new LaundryCard(0);
+        // LaundryCard card = new LaundryCard(0);
         this.initialBalance = initialBalance;
         initialBalance = 0;
         balance = initialBalance + balance;
@@ -39,4 +44,17 @@ public class LaundryCard {
     }
 
 
+//    @Override
+//    public String toString() {
+//        String machineIDStr = String.format(String.valueOf(balance));
+//        return "machineID =" + machineIDStr;
+//    }
+//
+//    @Override
+//    public void save(PrintWriter printWriter) {
+//        printWriter.print(balance);
+//        printWriter.print(Reader.DELIMITER);
+//
+//    }
 }
+

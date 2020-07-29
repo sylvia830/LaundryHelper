@@ -3,11 +3,19 @@ package ui;
 import model.LaundryCard;
 import model.LaundryTask;
 import model.TaskQueue;
+import persistence.Reader;
+import persistence.Writer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 import static model.LaundryCard.AMOUNT;
+import static sun.tools.jconsole.OutputViewer.init;
 
 
 //laundry helper application
@@ -16,7 +24,8 @@ public class LaundryHelper {
     LinkedList<LaundryTask> taskQueue = new LinkedList<LaundryTask>();
     private Scanner input;
     LaundryCard card = new LaundryCard(0);
-    LaundryTask lt;
+    private LaundryTask lt;
+    private static final String TASKS_FILE = "./data/laundryTasks.txt";
 
 
     //NOTE: credits to the sample Teller app
@@ -34,6 +43,7 @@ public class LaundryHelper {
         String command = null;
         input = new Scanner(System.in);
 
+        loadAccounts();
 
         while (keepGoing) {
             displayMenu();
@@ -59,6 +69,8 @@ public class LaundryHelper {
         System.out.println("\np -> Pay");
         System.out.println("\ns -> Start");
         System.out.println("\nm -> Check the list of unavailable machines");
+        System.out.println("\nv -> Save the ongoing task");
+        System.out.println("\nl -> Load the tasks");
         System.out.println("\nq -> Quit");
 
     }
@@ -78,6 +90,10 @@ public class LaundryHelper {
             checkAvailability();
         } else if (command.equals("m")) {
             printMachineID();
+        } else if (command.equals("v")) {
+            saveAccounts();
+        } else if (command.equals("l")) {
+            loadAccounts();
         } else {
             System.out.println("selection not valid");
         }
@@ -163,6 +179,40 @@ public class LaundryHelper {
     //EFFECTS: print current balance of the laundry card
     private void printBalance(LaundryCard card) {
         System.out.println("balance = ¢" + card.getBalance());
+    }
+
+    //MODIFIES: this
+    //EFFECTS: loads laundryTasks from TASKS_FILE, if that file exists;
+    //otherwise initializes laundry tasks with default values
+    private void loadAccounts() {
+        try {
+            List<LaundryTask> tasks = Reader.readLaundryTasks(new File(TASKS_FILE));
+            lt = tasks.get(0);
+        } catch (IOException e) {
+            init();
+        }
+    }
+
+    //EFFECTS: saves state of machineID and savings accounts to TASKS_FILE
+    private void saveAccounts() {
+        try {
+            Writer writer = new Writer(new File(TASKS_FILE));
+            writer.write(lt);
+            writer.close();
+            System.out.println("Accounts saved to file " + TASKS_FILE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save accounts to " + TASKS_FILE);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            //this is due to a programming error
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes laundryTask
+    private void init() {
+        lt = new LaundryTask(1);
+
     }
 
 
