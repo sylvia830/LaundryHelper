@@ -6,7 +6,7 @@ import persistence.Saveable;
 import java.io.PrintWriter;
 
 // a laundry card that enables users to add value, pay for services and check balance on account
-public class LaundryCard implements Saveable{
+public class LaundryCard implements Saveable {
 
     //Note that the fees and balance are measured in terms of cent
     //Note that washing service fee and drying service fee are the same at AMOUNT
