@@ -33,6 +33,7 @@ public class WriterTest {
     void testWriteAccounts() {
         // save laundry card to file
         testWriter.write(card);
+        testWriter.write(card1);
         testWriter.close();
 
         // now read them back in and verify that the accounts have the expected values
@@ -40,6 +41,9 @@ public class WriterTest {
             List<LaundryCard> cards = Reader.readLaundryCards(new File(TEST_FILE));
             card  = cards.get(0);
             assertEquals(700, card.getBalance());
+
+            card1 = cards.get(1);
+            assertEquals(800,card1.getBalance());
 
             LaundryCard nextCard = new LaundryCard(800);
             assertEquals(800,nextCard.getBalance());

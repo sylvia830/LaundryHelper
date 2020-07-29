@@ -22,7 +22,8 @@ public class LaundryHelper {
     TaskQueue tq = new TaskQueue();
     LinkedList<LaundryTask> taskQueue = new LinkedList<LaundryTask>();
     private Scanner input;
-    LaundryCard card;
+    LaundryCard card = new LaundryCard(0);
+    LaundryCard card1 = new LaundryCard(0);
     LaundryTask lt;
     private static final String CARDS_FILE = "./data/cards.txt";
 
@@ -186,7 +187,8 @@ public class LaundryHelper {
     private void loadCards() {
         try {
             List<LaundryCard> cards = Reader.readLaundryCards(new File(CARDS_FILE));
-            card = cards.get(0);
+            //card = cards.get(0);
+            //card1 = cards.get(1);
         } catch (IOException e) {
             init();
         }
@@ -197,6 +199,7 @@ public class LaundryHelper {
         try {
             Writer writer = new Writer(new File(CARDS_FILE));
             writer.write(card);
+            writer.write(card1);
             writer.close();
             System.out.println("Accounts saved to file " + CARDS_FILE);
         } catch (FileNotFoundException e) {
@@ -211,6 +214,7 @@ public class LaundryHelper {
     // EFFECTS: initializes laundryTask
     private void init() {
         card = new LaundryCard(0);
+        card1 = new LaundryCard(0);
 
     }
 

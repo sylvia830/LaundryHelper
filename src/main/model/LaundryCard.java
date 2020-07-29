@@ -46,7 +46,8 @@ public class LaundryCard implements Saveable {
     @Override
     public void save(PrintWriter printWriter) {
         printWriter.print(balance);
-        printWriter.print(Reader.DELIMITER);
+       // printWriter.print(Reader.DELIMITER);
+        printWriter.println();
     }
 
 
