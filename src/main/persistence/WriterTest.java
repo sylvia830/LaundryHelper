@@ -45,8 +45,8 @@ public class WriterTest {
             card1 = cards.get(1);
             assertEquals(800,card1.getBalance());
 
-            LaundryCard nextCard = new LaundryCard(800);
-            assertEquals(800,nextCard.getBalance());
+            LaundryCard nextCard = new LaundryCard(10000);
+            assertEquals(10000,nextCard.getBalance());
 
         } catch (IOException e) {
             fail("IOException should not have been thrown");
