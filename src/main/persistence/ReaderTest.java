@@ -21,6 +21,20 @@ public class ReaderTest {
 
             LaundryCard card1 = cards.get(1);
             assertEquals(1000, card1.getBalance());
+
+            LaundryCard card2 = cards.get(2);
+            assertEquals(200,card2.getBalance());
+
+            LaundryCard card3 = cards.get(3);
+            assertEquals(100, card3.getBalance());
+
+            LaundryCard card4 = cards.get(4);
+            assertEquals(500,card4.getBalance());
+
+            LaundryCard nextCard = new LaundryCard(800);
+            assertEquals(800, nextCard.getBalance());
+
+
         } catch (IOException e) {
             fail("IOException should not have been thrown!");
         }
@@ -35,6 +49,9 @@ public class ReaderTest {
 
             LaundryCard card1 = cards.get(1);
             assertEquals(800, card1.getBalance());
+
+            LaundryCard nextCard = new LaundryCard(700);
+            assertEquals(700,nextCard.getBalance());
         } catch (IOException e) {
             fail("IOException should not have been thrown!");
         }

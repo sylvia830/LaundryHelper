@@ -22,7 +22,7 @@ public class LaundryHelper {
     TaskQueue tq = new TaskQueue();
     LinkedList<LaundryTask> taskQueue = new LinkedList<LaundryTask>();
     private Scanner input;
-    LaundryCard card = new LaundryCard(0);
+    LaundryCard card;
     LaundryTask lt;
     private static final String CARDS_FILE = "./data/cards.txt";
 
