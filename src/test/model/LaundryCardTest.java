@@ -32,4 +32,9 @@ class LaundryCardTest {
         assertEquals(card.getBalance(), 110);
     }
 
+    @Test
+    public void testToString(){
+        assertEquals(card.toString(), "balance =0");
+    }
+
 }

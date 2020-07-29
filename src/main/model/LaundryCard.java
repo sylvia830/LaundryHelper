@@ -6,20 +6,20 @@ import persistence.Saveable;
 import java.io.PrintWriter;
 
 // a laundry card that enables users to add value, pay for services and check balance on account
-public class LaundryCard  {
+public class LaundryCard implements Saveable{
 
     //Note that the fees and balance are measured in terms of cent
     //Note that washing service fee and drying service fee are the same at AMOUNT
-    public int initialBalance;
+    public int initialBalance = 0;
     public int balance;
     public static int AMOUNT = 125;
 
     //EFFECTS: a constructor that creates a new laundry card
-    public LaundryCard(int initialBalance) {
+    public LaundryCard(int balance) {
         // LaundryCard card = new LaundryCard(0);
-        this.initialBalance = initialBalance;
-        initialBalance = 0;
-        balance = initialBalance + balance;
+        //this.initialBalance = initialBalance;
+        //initialBalance = 0;
+        this.balance = initialBalance + balance;
     }
 
     //Note that the service fee for washing and drying is the same at AMOUNT
@@ -43,18 +43,18 @@ public class LaundryCard  {
         return balance;
     }
 
+    @Override
+    public void save(PrintWriter printWriter) {
+        printWriter.print(balance);
+        printWriter.print(Reader.DELIMITER);
+    }
 
-//    @Override
-//    public String toString() {
-//        String machineIDStr = String.format(String.valueOf(balance));
-//        return "machineID =" + machineIDStr;
-//    }
-//
-//    @Override
-//    public void save(PrintWriter printWriter) {
-//        printWriter.print(balance);
-//        printWriter.print(Reader.DELIMITER);
-//
-//    }
+
+    @Override
+    public String toString() {
+        String balanceStr = String.format(String.valueOf(balance));
+        return "balance =" + balanceStr;
+    }
+
 }
 

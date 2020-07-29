@@ -1,5 +1,6 @@
 package persistence;
 
+import model.LaundryCard;
 import model.LaundryTask;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,30 +15,28 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class WriterTest {
-    private static final String TEST_FILE = "./data/testTasks.txt";
+    private static final String TEST_FILE = "./data/testCards.txt";
     private Writer testWriter;
-    private LaundryTask laundryTask;
+    private LaundryCard card;
 
     @BeforeEach
     void runBefore() throws FileNotFoundException, UnsupportedEncodingException {
         testWriter = new Writer(new File(TEST_FILE));
-        laundryTask = new LaundryTask(7);
+        card = new LaundryCard(700);
     }
 
     @Test
     void testWriteAccounts() {
-        // save laundry task to file
-        testWriter.write(laundryTask);
+        // save laundry card to file
+        testWriter.write(card);
         testWriter.close();
 
         // now read them back in and verify that the accounts have the expected values
         try {
-            List<LaundryTask> tasks = Reader.readLaundryTasks(new File(TEST_FILE));
-            LaundryTask laundryTask = tasks.get(0);
-            assertEquals(7, laundryTask.getMachineID());
+            List<LaundryCard> cards = Reader.readLaundryCards(new File(TEST_FILE));
+            LaundryCard card  = cards.get(0);
+            assertEquals(700, card.getBalance());
 
-            LaundryTask nextTask = new LaundryTask(3);
-            assertEquals(3, nextTask.getMachineID());
 
         } catch (IOException e) {
             fail("IOException should not have been thrown");

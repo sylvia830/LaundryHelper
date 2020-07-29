@@ -1,6 +1,6 @@
 package persistence;
 
-import model.LaundryTask;
+import model.LaundryCard;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -11,49 +11,41 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class ReaderTest {
+
     @Test
-    void testParseAccountsFile1() {
+    public void testParseCardsFile1() {
         try {
-            List<LaundryTask> tasks = Reader.readLaundryTasks(new File("./data/testTaskFile1.txt"));
-            LaundryTask laundryTask = tasks.get(0);
-            assertEquals(3, laundryTask.getMachineID());
+            List<LaundryCard> cards = Reader.readLaundryCards(new File("./data/testCardFile1.txt"));
+            LaundryCard card = cards.get(0);
+            assertEquals(2000, card.getBalance());
 
-            LaundryTask lt = tasks.get(1);
-            assertEquals(1, lt.getMachineID());
-
-            // check that nextAccountId has been set correctly
-            LaundryTask nextTask = new LaundryTask(6);
-            assertEquals(6, nextTask.getMachineID());
+            LaundryCard card1 = cards.get(1);
+            assertEquals(1000, card1.getBalance());
         } catch (IOException e) {
-            fail("IOException should not have been thrown");
+            fail("IOException should not have been thrown!");
         }
     }
 
     @Test
-    void testParseAccountsFile2() {
+    public void testParseCardsFile2() {
         try {
-            List<LaundryTask> tasks = Reader.readLaundryTasks(new File("./data/testTaskFile2.txt"));
-            LaundryTask task = tasks.get(0);
-            assertEquals(1, task.getMachineID());
+            List<LaundryCard> cards = Reader.readLaundryCards(new File("./data/testCardFile2.txt"));
+            LaundryCard card = cards.get(0);
+            assertEquals(500, card.getBalance());
 
-            LaundryTask task1 = tasks.get(1);
-            assertEquals(2, task1.getMachineID());
-
-            // check that nextAccountId has been set correctly
-            LaundryTask nextTask = new LaundryTask(8);
-            assertEquals(3, nextTask.getMachineID());
+            LaundryCard card1 = cards.get(1);
+            assertEquals(800, card1.getBalance());
         } catch (IOException e) {
-            fail("IOException should not have been thrown");
+            fail("IOException should not have been thrown!");
         }
     }
 
     @Test
-    void testIOException() {
+    public void testIOException() {
         try {
-            Reader.readLaundryTasks(new File("./path/does/not/exist/testTask.txt"));
+            Reader.readLaundryCards(new File("./path/does/not/exist/testAccount.txt"));
         } catch (IOException e) {
-            // expected
+            //expected
         }
     }
 }
-

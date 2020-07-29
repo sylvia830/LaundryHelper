@@ -23,8 +23,8 @@ public class LaundryHelper {
     LinkedList<LaundryTask> taskQueue = new LinkedList<LaundryTask>();
     private Scanner input;
     LaundryCard card = new LaundryCard(0);
-    private LaundryTask lt;
-    private static final String TASKS_FILE = "./data/laundryTasks.txt";
+    LaundryTask lt;
+    private static final String CARDS_FILE = "./data/cards.txt";
 
 
     //NOTE: credits to the sample Teller app
@@ -42,7 +42,7 @@ public class LaundryHelper {
         String command = null;
         input = new Scanner(System.in);
 
-        loadAccounts();
+        loadCards();
 
         while (keepGoing) {
             displayMenu();
@@ -62,15 +62,15 @@ public class LaundryHelper {
     //NOTE: credits to the sample Teller app
     //EFFECTS: display menu of options to user
     private void displayMenu() {
-        System.out.println("\nSelect from:");
-        System.out.println("\na -> Add value");
-        System.out.println("\nc -> Check balance");
-        System.out.println("\np -> Pay");
-        System.out.println("\ns -> Start");
-        System.out.println("\nm -> Check the list of unavailable machines");
-        System.out.println("\nv -> Save the ongoing task");
-        System.out.println("\nl -> Load the tasks");
-        System.out.println("\nq -> Quit");
+        System.out.println("\tSelect from:");
+        System.out.println("\ta -> Add value");
+        System.out.println("\tc -> Check balance");
+        System.out.println("\tp -> Pay");
+        System.out.println("\ts -> Start");
+        System.out.println("\tm -> Check the list of unavailable machines");
+        System.out.println("\tv -> Save my current balance");
+        System.out.println("\tl -> Load my balance");
+        System.out.println("\tq -> Quit");
 
     }
 
@@ -90,9 +90,9 @@ public class LaundryHelper {
         } else if (command.equals("m")) {
             printMachineID();
         } else if (command.equals("v")) {
-            saveAccounts();
+            saveCards();
         } else if (command.equals("l")) {
-            loadAccounts();
+            loadCards();
         } else {
             System.out.println("selection not valid");
         }
@@ -183,24 +183,24 @@ public class LaundryHelper {
     //MODIFIES: this
     //EFFECTS: loads laundryTasks from TASKS_FILE, if that file exists;
     //otherwise initializes laundry tasks with default values
-    private void loadAccounts() {
+    private void loadCards() {
         try {
-            List<LaundryTask> tasks = Reader.readLaundryTasks(new File(TASKS_FILE));
-            lt = tasks.get(0);
+            List<LaundryCard> cards = Reader.readLaundryCards(new File(CARDS_FILE));
+            card = cards.get(0);
         } catch (IOException e) {
             init();
         }
     }
 
     //EFFECTS: saves state of machineID and savings accounts to TASKS_FILE
-    private void saveAccounts() {
+    private void saveCards() {
         try {
-            Writer writer = new Writer(new File(TASKS_FILE));
-            writer.write(lt);
+            Writer writer = new Writer(new File(CARDS_FILE));
+            writer.write(card);
             writer.close();
-            System.out.println("Accounts saved to file " + TASKS_FILE);
+            System.out.println("Accounts saved to file " + CARDS_FILE);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to save accounts to " + TASKS_FILE);
+            System.out.println("Unable to save accounts to " + CARDS_FILE);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             //this is due to a programming error
@@ -210,7 +210,7 @@ public class LaundryHelper {
     // MODIFIES: this
     // EFFECTS: initializes laundryTask
     private void init() {
-        lt = new LaundryTask(1);
+        card = new LaundryCard(0);
 
     }
 

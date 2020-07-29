@@ -17,10 +17,5 @@ public class LaundryTaskTest {
 
     }
 
-    @Test
-    public void testToString(){
-        assertTrue(lt.toString().contains("machineID =3"));
-    }
-
 
 }
