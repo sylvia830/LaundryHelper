@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-// A writer that can write account data to a file
+// A writer that can write laundry card balance data to a file
 public class Writer {
     private PrintWriter printWriter;
 

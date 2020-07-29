@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// a reader that can read laundry card balance data to file
 public class Reader {
     public static final String DELIMITER = ",";
 
