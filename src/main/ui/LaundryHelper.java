@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import static model.LaundryCard.AMOUNT;
-import static sun.tools.jconsole.OutputViewer.init;
 
 
 //laundry helper application
