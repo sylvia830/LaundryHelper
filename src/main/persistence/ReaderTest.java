@@ -31,6 +31,9 @@ public class ReaderTest {
             LaundryCard card4 = cards.get(4);
             assertEquals(500,card4.getBalance());
 
+            LaundryCard card5 = cards.get(5);
+            assertEquals(600, card5.getBalance());
+
             LaundryCard nextCard = new LaundryCard(800);
             assertEquals(800, nextCard.getBalance());
 
