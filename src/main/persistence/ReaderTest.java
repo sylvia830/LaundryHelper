@@ -7,10 +7,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ReaderTest {
+    private Reader reader;
 
     @Test
     public void testParseCardsFile1() {
@@ -63,7 +63,7 @@ public class ReaderTest {
     @Test
     public void testIOException() {
         try {
-            Reader.readLaundryCards(new File("./path/does/not/exist/testAccount.txt"));
+            Reader.readLaundryCards(new File("./path/does/not/exist/testCards.txt"));
         } catch (IOException e) {
             //expected
         }

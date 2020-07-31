@@ -34,7 +34,6 @@ public class LaundryCard implements Saveable {
     //MODIFIES: this
     //EFFECTS: add value to laundry card
     public void addValue(int num) {
-        System.out.println("Please type in the amount you want to deposit:");
         balance = balance + num;
     }
 

@@ -12,6 +12,7 @@ import java.util.List;
 // a reader that can read laundry card balance data to file
 public class Reader {
     public static final String DELIMITER = ",";
+    private Reader reader;
 
     public static List<LaundryCard> readLaundryCards(File file) throws IOException {
         List<String> fileContent = readFile(file);
