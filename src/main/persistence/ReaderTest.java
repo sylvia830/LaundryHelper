@@ -1,6 +1,7 @@
 package persistence;
 
 import model.LaundryCard;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -11,7 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ReaderTest {
     private Reader reader;
-    
+
+    @BeforeEach
+    // a call to Reader, for coverage purpose
+    void setup() {
+        reader = new Reader();
+    }
 
     @Test
     public void testParseCardsFile1() {
