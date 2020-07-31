@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ReaderTest {
     private Reader reader;
+    
 
     @Test
     public void testParseCardsFile1() {
@@ -23,13 +24,13 @@ public class ReaderTest {
             assertEquals(1000, card1.getBalance());
 
             LaundryCard card2 = cards.get(2);
-            assertEquals(200,card2.getBalance());
+            assertEquals(200, card2.getBalance());
 
             LaundryCard card3 = cards.get(3);
             assertEquals(100, card3.getBalance());
 
             LaundryCard card4 = cards.get(4);
-            assertEquals(500,card4.getBalance());
+            assertEquals(500, card4.getBalance());
 
             LaundryCard card5 = cards.get(5);
             assertEquals(600, card5.getBalance());
@@ -54,7 +55,7 @@ public class ReaderTest {
             assertEquals(800, card1.getBalance());
 
             LaundryCard nextCard = new LaundryCard(700);
-            assertEquals(700,nextCard.getBalance());
+            assertEquals(700, nextCard.getBalance());
         } catch (IOException e) {
             fail("IOException should not have been thrown!");
         }
