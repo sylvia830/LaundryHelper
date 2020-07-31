@@ -1,8 +1,9 @@
-package persistence;
+package test;
 
 import model.LaundryCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import persistence.Reader;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,10 +45,10 @@ public class ReaderTest {
             LaundryCard nextCard = new LaundryCard(800);
             assertEquals(800, nextCard.getBalance());
 
-
         } catch (IOException e) {
-            fail("IOException should not have been thrown!");
+            fail();
         }
+
     }
 
     @Test
@@ -71,6 +72,7 @@ public class ReaderTest {
     public void testIOException() {
         try {
             Reader.readLaundryCards(new File("./path/does/not/exist/testCards.txt"));
+            fail();
         } catch (IOException e) {
             //expected
         }

@@ -1,5 +1,6 @@
-package model;
+package test;
 
+import model.LaundryCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

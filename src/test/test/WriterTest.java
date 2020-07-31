@@ -1,8 +1,10 @@
-package persistence;
+package test;
 
 import model.LaundryCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import persistence.Reader;
+import persistence.Writer;
 
 import java.io.File;
 import java.io.FileNotFoundException;

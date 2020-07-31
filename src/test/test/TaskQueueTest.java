@@ -1,5 +1,7 @@
-package model;
+package test;
 
+import model.LaundryTask;
+import model.TaskQueue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
