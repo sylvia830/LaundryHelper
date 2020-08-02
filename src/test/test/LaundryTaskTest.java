@@ -18,5 +18,10 @@ public class LaundryTaskTest {
 
     }
 
+    @Test
+    public void testToString(){
+        assertEquals(lt.toString(),"machineID =3");
+    }
+
 
 }

@@ -4,6 +4,7 @@ import model.LaundryCard;
 import model.LaundryTask;
 import model.TaskQueue;
 import persistence.Reader;
+import persistence.ReaderTask;
 import persistence.Writer;
 
 import java.io.File;
@@ -23,8 +24,9 @@ public class LaundryHelper {
     LinkedList<LaundryTask> taskQueue = new LinkedList<LaundryTask>();
     private Scanner input;
     LaundryCard card = new LaundryCard(0);
-    LaundryTask lt;
+    LaundryTask lt = new LaundryTask(1);
     private static final String CARDS_FILE = "./data/cards.txt";
+    private static final String TASKS_FILE = "./data/tasks.txt";
 
 
     //NOTE: credits to the sample Teller app
@@ -43,6 +45,7 @@ public class LaundryHelper {
         input = new Scanner(System.in);
 
         loadCards();
+        loadTasks();
 
         while (keepGoing) {
             displayMenu();
@@ -67,9 +70,10 @@ public class LaundryHelper {
         System.out.println("\tc -> Check balance");
         System.out.println("\tp -> Pay");
         System.out.println("\ts -> Start");
-        System.out.println("\tm -> Check the list of unavailable machines");
+        System.out.println("\tm -> Check the list of unavailable machines(please choose this option after you start)");
         System.out.println("\tv -> Save my current balance");
-        System.out.println("\tl -> Load my balance");
+        System.out.println("\tk -> Save my current machine");
+        //System.out.println("\tl -> Load my balance");
         System.out.println("\tq -> Quit");
 
     }
@@ -91,8 +95,10 @@ public class LaundryHelper {
             printMachineID();
         } else if (command.equals("v")) {
             saveCards();
-        } else if (command.equals("l")) {
-            loadCards();
+        } else if (command.equals("k")) {
+            saveTasks();
+       // } else if (command.equals("l")) {
+          //  loadCards();
         } else {
             System.out.println("selection not valid");
         }
@@ -192,6 +198,15 @@ public class LaundryHelper {
         }
     }
 
+    private void loadTasks() {
+        try {
+            taskQueue = ReaderTask.readLaundryTask(new File(TASKS_FILE));
+            lt = taskQueue.get(0);
+        } catch (IOException e) {
+            init();
+        }
+    }
+
     //EFFECTS: saves state of machineID and savings accounts to TASKS_FILE
     private void saveCards() {
         try {
@@ -205,6 +220,21 @@ public class LaundryHelper {
             e.printStackTrace();
             //this is due to a programming error
         }
+    }
+
+    private void saveTasks() {
+        try {
+            Writer writer = new Writer(new File(TASKS_FILE));
+            writer.write(lt);
+            writer.close();
+            System.out.println("Accounts saved to file " + TASKS_FILE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save accounts to " + TASKS_FILE);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            //this is due to a programming error
+        }
+
     }
 
     // MODIFIES: this

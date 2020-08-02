@@ -1,6 +1,9 @@
 package model;
 
 
+import persistence.Saveable;
+
+import java.io.PrintWriter;
 import java.util.LinkedList;
 
 //a task queue that will be added with laundry task as long as its size is less than MAX_NUM
@@ -59,7 +62,6 @@ public class TaskQueue {
             return true;
         }
     }
-
 
 }
 
