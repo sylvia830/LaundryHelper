@@ -77,16 +77,6 @@ public class TaskQueueTest {
     }
 
     @Test
-    public void testRemove() {
-        assertFalse(tq.remove());
-        tq.addTask(lt);
-        assertTrue(tq.remove());
-        tq.addTask(lt1);
-        tq.addTask(lt2);
-        assertTrue(tq.remove());
-    }
-
-    @Test
     public void noDuplicates() {
         tq.addTask(lt);
         tq.addTask(lt1);

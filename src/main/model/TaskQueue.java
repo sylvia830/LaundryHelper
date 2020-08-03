@@ -53,18 +53,6 @@ public class TaskQueue {
     }
 
 
-    //REQUIRES: the queue cannot be empty
-    //MODIFIES: this
-    //EFFECTS: removes the last added task
-    public boolean remove() {
-        if (taskQueue.size() == 0) {
-            return false;
-        } else {
-            taskQueue.removeLast();
-            return true;
-        }
-    }
-
     //MODIFIES:this
     //EFFECTS: removes the task that has identical machineID with the rest of the list
     public String noDuplicates(int machineID) {
