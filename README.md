@@ -28,3 +28,4 @@ User Stories:
 - As a user, I want to be able to check the balance on my account and add value to it.
 - As a user, I want to be able to save my card balance to the file.
 - As a user, I want to be able to load my card balance from the file.
+- As a user, I want to be able to save my current machineId to the file and load it afterwards.

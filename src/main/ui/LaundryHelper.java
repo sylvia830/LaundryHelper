@@ -29,6 +29,7 @@ public class LaundryHelper {
     private static final String TASKS_FILE = "./data/tasks.txt";
 
 
+
     //NOTE: credits to the sample Teller app
     //EFFECTS: runs the laundry helper application
     public LaundryHelper() {
@@ -97,14 +98,15 @@ public class LaundryHelper {
             saveCards();
         } else if (command.equals("k")) {
             saveTasks();
-       // } else if (command.equals("l")) {
-          //  loadCards();
+        //} else if (command.equals("l")) {
+            //loadTasks();
         } else {
             System.out.println("selection not valid");
         }
 
     }
 
+    //REQUIRES: the machine you choose cannot be the one you have saved to the file
     //MODIFIES: this
     //EFFECTS: check if there are available machines right now and if there is, choose a machine
     private void checkAvailability() {
@@ -118,7 +120,7 @@ public class LaundryHelper {
             lt = new LaundryTask(machineID);
             if (!(taskQueue.size() == 0)) {
                 for (LaundryTask lt : taskQueue) {
-                    if (lt.machineID == machineID) {
+                    if (lt.machineID == machineID || taskQueue.get(0).getMachineID() == machineID) {
                         System.out.println("The machine of your choice is not available right now. "
                                 + "Please choose another one or come back later!");
                         taskQueue.removeLast();
@@ -241,6 +243,7 @@ public class LaundryHelper {
     // EFFECTS: initializes laundryTask
     private void init() {
         card = new LaundryCard(0);
+        lt = new LaundryTask(1);
 
     }
 
