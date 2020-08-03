@@ -74,7 +74,6 @@ public class LaundryHelper {
         System.out.println("\tm -> Check the list of unavailable machines(please choose this option after you start)");
         System.out.println("\tv -> Save my current balance");
         System.out.println("\tk -> Save my current machine");
-        //System.out.println("\tl -> Load my balance");
         System.out.println("\tq -> Quit");
 
     }
@@ -98,8 +97,6 @@ public class LaundryHelper {
             saveCards();
         } else if (command.equals("k")) {
             saveTasks();
-        //} else if (command.equals("l")) {
-            //loadTasks();
         } else {
             System.out.println("selection not valid");
         }
@@ -118,18 +115,8 @@ public class LaundryHelper {
                     + "then your choice is available. Please press 'p' to proceed.");
             int machineID = input.nextInt();
             lt = new LaundryTask(machineID);
-            if (!(taskQueue.size() == 0)) {
-                for (LaundryTask lt : taskQueue) {
-                    if (lt.machineID == machineID || taskQueue.get(0).getMachineID() == machineID) {
-                        System.out.println("The machine of your choice is not available right now. "
-                                + "Please choose another one or come back later!");
-                        taskQueue.removeLast();
-                        tq.remove();
-                    }
-                }
-            }
+            System.out.println(tq.noDuplicates(machineID));
             tq.addTask(lt);
-            taskQueue.add(lt);
 
         } else {
             System.out.println("The machines are occupied. Please swing by later!");
@@ -144,9 +131,7 @@ public class LaundryHelper {
             System.out.println("There is no ongoing task. Please press 's' to begin.");
         } else {
             System.out.println("The machines in use right now are  ");
-            for (LaundryTask lt : taskQueue) {
-                System.out.println(lt.getMachineID());
-            }
+            tq.print();
         }
     }
 
@@ -189,7 +174,7 @@ public class LaundryHelper {
     }
 
     //MODIFIES: this
-    //EFFECTS: loads laundryTasks from TASKS_FILE, if that file exists;
+    //EFFECTS: loads laundryCards from CARDS_FILE, if that file exists;
     //otherwise initializes laundry tasks with default values
     private void loadCards() {
         try {
@@ -200,16 +185,20 @@ public class LaundryHelper {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: loads laundryTasks from TASKS_FILE, if that file exists;
+    //otherwise initializes laundry tasks with default values
     private void loadTasks() {
         try {
             taskQueue = ReaderTask.readLaundryTask(new File(TASKS_FILE));
             lt = taskQueue.get(0);
+            tq.addTask(lt);
         } catch (IOException e) {
             init();
         }
     }
 
-    //EFFECTS: saves state of machineID and savings accounts to TASKS_FILE
+    //EFFECTS: saves state of balance to CARDS_FILE
     private void saveCards() {
         try {
             Writer writer = new Writer(new File(CARDS_FILE));
@@ -224,6 +213,7 @@ public class LaundryHelper {
         }
     }
 
+    //EFFECTS: save the state of task's machineID to TASKS_FILE
     private void saveTasks() {
         try {
             Writer writer = new Writer(new File(TASKS_FILE));

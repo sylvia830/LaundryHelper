@@ -29,6 +29,7 @@ public class LaundryTask implements Saveable {
     }
 
 
+    //EFFECTS: returns a string representation of a laundry task
     @Override
     public String toString() {
         String machineIDStr = String.format(String.valueOf(machineID));

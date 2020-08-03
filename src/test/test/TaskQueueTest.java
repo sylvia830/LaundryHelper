@@ -4,7 +4,7 @@ import model.LaundryTask;
 import model.TaskQueue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -25,14 +25,14 @@ public class TaskQueueTest {
 
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
 
         tq = new TaskQueue();
     }
 
 
     @Test
-    public void testAddTask(){
+    public void testAddTask() {
         tq.addTask(lt);
         assertTrue(tq.addTask(lt));
         tq.addTask(lt1);
@@ -50,7 +50,7 @@ public class TaskQueueTest {
     }
 
     @Test
-    public void testIsAvailable(){
+    public void testIsAvailable() {
         assertTrue(tq.isAvailable());
         tq.addTask(lt);
         assertTrue(tq.isAvailable());
@@ -67,7 +67,7 @@ public class TaskQueueTest {
     }
 
     @Test
-    public void testNoTask(){
+    public void testNoTask() {
         assertTrue(tq.noTask());
         tq.addTask(lt);
         assertFalse(tq.noTask());
@@ -77,13 +77,36 @@ public class TaskQueueTest {
     }
 
     @Test
-    public void testRemove(){
+    public void testRemove() {
         assertFalse(tq.remove());
         tq.addTask(lt);
         assertTrue(tq.remove());
         tq.addTask(lt1);
         tq.addTask(lt2);
         assertTrue(tq.remove());
+    }
+
+    @Test
+    public void noDuplicates() {
+        tq.addTask(lt);
+        tq.addTask(lt1);
+        tq.noDuplicates(0);
+        assertEquals(2,tq.size());
+        tq.noDuplicates(1);
+        assertEquals(1,tq.size());
+    }
+
+    @Test
+    public void testSize(){
+        assertEquals(0, tq.size());
+        tq.addTask(lt);
+        assertEquals(1,tq.size());
+    }
+
+    @Test
+    public void testPrint(){
+        tq.addTask(lt);
+        assertEquals(0, tq.print());
     }
 
 }

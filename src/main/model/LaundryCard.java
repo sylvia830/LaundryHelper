@@ -50,6 +50,7 @@ public class LaundryCard implements Saveable {
     }
 
 
+    //EFFECTS: returns a string representation of a laundry card
     @Override
     public String toString() {
         String balanceStr = String.format(String.valueOf(balance));
