@@ -29,3 +29,18 @@ User Stories:
 - As a user, I want to be able to save my card balance to the file.
 - As a user, I want to be able to load my card balance from the file.
 - As a user, I want to be able to save my current machineId to the file and load it afterwards.
+
+Instructions for Grader
+- You can generate the first required event by inputting the machineID of the machine you wish to use into the text 
+field right beside the "Start" button at the top of the window. On the right side of the text box, You can also see the 
+list of machineIDs of the occupied machines.
+- You can generate the second required event by clicking on the "delete my current task" button, and you will see the 
+task gone from the list.
+- You can trigger my audio component by clicking on the "Start" button.
+- You can save the state of my application by clicking on "Save my current machine" and "Save my current balance" 
+buttons.
+- You can reload the state of my application by clicking on "Check Balance" button to see the balance previously saved, 
+meanwhile the machineID of the saved machine is already in the list of unavailable machines (when you rerun the program,
+you'll see the machineID there in the list).
+- You can locate my pop-up dialog by clicking on "Save my current machine" and "Save my current balance" buttons.
+

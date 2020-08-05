@@ -46,8 +46,18 @@ public class TaskQueueTest {
         tq.addTask(lt8);
         tq.addTask(lt9);
         assertFalse(tq.addTask(lt10));
-
     }
+
+    @Test
+    public void testRemove() {
+        assertFalse(tq.remove());
+        tq.addTask(lt);
+        assertTrue(tq.remove());
+        tq.addTask(lt1);
+        tq.addTask(lt2);
+        assertTrue(tq.remove());
+    }
+
 
     @Test
     public void testIsAvailable() {

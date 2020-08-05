@@ -32,6 +32,18 @@ public class TaskQueue {
         }
     }
 
+    //REQUIRES: the queue cannot be empty
+    //MODIFIES: this
+    //EFFECTS: removes the last added task
+    public boolean remove() {
+        if (taskQueue.size() == 0) {
+            return false;
+        } else {
+            taskQueue.removeLast();
+            return true;
+        }
+    }
+
 
     //EFFECTS: returns true if the size of taskQueue is less than MAX_NUM, otherwise false.
     public boolean isAvailable() {
