@@ -7,7 +7,6 @@ import persistence.Reader;
 import persistence.ReaderTask;
 import persistence.Writer;
 
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
@@ -35,8 +34,27 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
     private static final String TASKS_FILE = "./data/tasks.txt";
     DefaultListModel<Integer> listModel = new DefaultListModel<>();
     JList<Integer> tasks = new JList<>();
-
-
+    JFrame frame = new JFrame("Laundry Helper");
+    JScrollPane listScrollPane = new JScrollPane(tasks);
+    JPanel panel = new JPanel();
+    JPanel panel1 = new JPanel();
+    JLabel label1 = new JLabel("Manage your laundry card balance here");
+    JButton addValue = new JButton("Add value");
+    JTextField addValueBox = new JTextField(8);
+    JButton pay = new JButton("Pay");
+    JButton checkBalance = new JButton("Check balance");
+    JLabel label2 = new JLabel("Create a new laundry task here!");
+    JButton deleteMyCurrentTask = new JButton("Delete my current task");
+    JButton start = new JButton("Start");
+    JTextField chooseMyMachine = new JTextField(10);
+    JLabel listOfMachines = new JLabel("The machines in use are:");
+    JButton saveMyCurrentMachine = new JButton("Save my current machine");
+    JButton saveMyCurrentBalance = new JButton("Save my current balance");
+    Icon icon = new ImageIcon("data/washingMachine.png");
+    JLabel washingMachine = new JLabel(icon);
+    Icon icon1 = new ImageIcon("data/laundry card.png");
+    JLabel laundryCardIcon = new JLabel(icon1);
+    Container contentPane = frame.getContentPane();
 
     //NOTE: credits to the sample Teller app
     //EFFECTS: runs the laundry helper application
@@ -45,46 +63,42 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
         //create a list that displays the list of unavailable machines
         tasks.setModel(listModel);
         tasks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        JScrollPane listScrollPane = new JScrollPane(tasks);
         tasks.setSelectedIndex(0);
         tasks.addListSelectionListener(this);
         tasks.setVisibleRowCount(10);
-
         //create a new window
-        JFrame frame = new JFrame("Laundry Helper");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel panel = new JPanel();
-        JPanel panel1 = new JPanel();
-
+        //set window size
+        frame.setSize(2000, 500);
+        //display window
+        frame.setVisible(true);
         //content pane
-        Container contentPane = frame.getContentPane();
         contentPane.setLayout(new BorderLayout());
-        JLabel label1 = new JLabel("Manage your laundry card balance here");
         label1.setFont(new Font("Arial", Font.BOLD, 20));
         label1.setForeground(Color.BLUE);
-        JButton addValue = new JButton("Add value");
-        JTextField addValueBox = new JTextField(8);
-        JButton pay = new JButton("Pay");
-        JButton checkBalance = new JButton("Check balance");
-        JLabel label2 = new JLabel("Create a new laundry task here!");
+        label1.setFont(new Font("Arial", Font.BOLD, 20));
+        label1.setForeground(Color.BLUE);
         label2.setFont(new Font("Arial", Font.BOLD, 20));
         label2.setForeground(Color.BLUE);
-        JButton deleteMyCurrentTask = new JButton("Delete my current task");
-        JButton start = new JButton("Start");
-        JTextField chooseMyMachine = new JTextField(10);
-        JLabel listOfMachines = new JLabel("The machines in use are:");
-        JButton saveMyCurrentMachine = new JButton("Save my current machine");
-        JButton saveMyCurrentBalance = new JButton("Save my current balance");
 
-        //create images
-        Icon icon = new ImageIcon("data/washingMachine.png");
-        JLabel washingMachine = new JLabel(icon);
-        Icon icon1 = new ImageIcon("data/laundry card.png");
-        JLabel laundryCardIcon = new JLabel(icon1);
-        Icon savedIcon = new ImageIcon("data/savedIcon.png");
+        addElement();
 
-        //add new control elements to content pane
+        initialiseAddValue();
+        initialiseAddValueBox();
+        initialisePay();
+        initialiseSaveMyCurrentBalance();
+        initialiseCheckBalance();
+        initialiseStart();
+        initialiseChooseMyMachine();
+        initialiseSaveMyCurrentMachine();
+        initialiseDeleteMyCurrentMachine();
+
+        runLaundryHelper();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: add new control elements to content pane
+    public void addElement() {
         panel.add(laundryCardIcon);
         panel.add(label1);
         panel.add(addValue);
@@ -108,77 +122,115 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPane.add(panel, BorderLayout.PAGE_END);
         contentPane.add(panel1);
+    }
 
-        //set window size
-        frame.setSize(2000, 500);
-
-        //display window
-        frame.setVisible(true);
-
-        //create listener
+    //EFFECTS: initialise add value action listener
+    public void initialiseAddValue() {
         addValue.addActionListener((e) -> {
             System.out.println("Enter an amount to deposit (in cents):");
         });
+    }
 
+    //EFFECTS: initialise add value box action listener
+    public void initialiseAddValueBox() {
         addValueBox.addActionListener((e) -> {
-            String deposit = addValueBox.getText();
-            card.addValue(Integer.valueOf(deposit));
-            printBalance(card);
+            setAddValueBox();
         });
+    }
 
+    //EFFECTS: initialise pay action listener
+    public void initialisePay() {
         pay.addActionListener((e) -> {
             doPay();
         });
+    }
 
+    //EFFECTS: initialise save my current balance action listener
+    public void initialiseSaveMyCurrentBalance() {
         saveMyCurrentBalance.addActionListener((e) -> {
             saveCards();
             saveBalancePane();
         });
+    }
 
+    //EFFECTS: initialise check balance action listener
+    public void initialiseCheckBalance() {
         checkBalance.addActionListener((e) -> {
             printBalance(card);
         });
+    }
 
+    //EFFECTS: initialise start action listener
+    public void initialiseStart() {
         start.addActionListener((e) -> {
-            System.out.println("You may start now!");
-            System.out.println("Choose the machine you want to use: ");
-            System.out.println("(washing machine ID: 1-7, dryer ID: 8-10)");
-            System.out.println("Note: if there is no further message after your input, "
-                    + "then your choice is available. Please press 'p' to proceed.");
-            File startSound = new File("./data/start.wav");
-            playSound(startSound);
+            start();
         });
+    }
 
+    //EFFECTS: initialise choose my machine action listener
+    public void initialiseChooseMyMachine() {
         chooseMyMachine.addActionListener((e) -> {
-            if (tq.isAvailable()) {
-                int machineID = Integer.valueOf(chooseMyMachine.getText());
-                lt = new LaundryTask(machineID);
-                System.out.println(tq.noDuplicates(machineID));
-                tq.addTask(lt);
-                if (!listModel.contains(Integer.valueOf(chooseMyMachine.getText()))) {
-                    listModel.addElement(Integer.parseInt(chooseMyMachine.getText()));
-                }
-            } else {
-                System.out.println("The machines are occupied. Please swing by later!");
-            }
-
+            chooseMyMachine();
         });
+    }
 
+    //EFFECTS: initialise save my current machine action listener
+    public void initialiseSaveMyCurrentMachine() {
         saveMyCurrentMachine.addActionListener((e) -> {
             saveTasks();
             saveTaskPane();
         });
-
-        //cannot successfully delete the saved task
-        deleteMyCurrentTask.addActionListener((e) -> {
-            listModel.removeElementAt(listModel.size() - 1);
-            tq.remove();
-        });
-
-        runLaundryHelper();
     }
 
+    //EFFECTS: initialise delete my current machine action listener
+    public void initialiseDeleteMyCurrentMachine() {
+        deleteMyCurrentTask.addActionListener((e) -> {
+            deleteMyMachine();
+        });
+    }
 
+    //MODIFIES: this
+    //EFFECTS: add value to current balance
+    public void setAddValueBox() {
+        String deposit = addValueBox.getText();
+        card.addValue(Integer.valueOf(deposit));
+        printBalance(card);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: check machine availability and choose a machine if available
+    public void chooseMyMachine() {
+        if (tq.isAvailable()) {
+            int machineID = Integer.valueOf(chooseMyMachine.getText());
+            lt = new LaundryTask(machineID);
+            System.out.println(tq.noDuplicates(machineID));
+            tq.addTask(lt);
+            if (!listModel.contains(Integer.valueOf(chooseMyMachine.getText()))) {
+                listModel.addElement(Integer.parseInt(chooseMyMachine.getText()));
+            }
+        } else {
+            System.out.println("The machines are occupied. Please swing by later!");
+        }
+    }
+
+    //REQUIRES: cannot delete after saving the machine to files
+    //MODIFIES: this
+    //EFFECTS: delete the current machine
+    public void deleteMyMachine() {
+        listModel.removeElementAt(listModel.size() - 1);
+        tq.remove();
+    }
+
+    //EFFECTS: start to play sound
+    public void start() {
+        System.out.println("You may start now!");
+        System.out.println("Choose the machine you want to use: ");
+        System.out.println("(washing machine ID: 1-7, dryer ID: 8-10)");
+        System.out.println("Note: if there is no further message after your input, "
+                + "then your choice is available. Please press 'p' to proceed.");
+        File startSound = new File("./data/start.wav");
+        playSound(startSound);
+    }
 
 
     //NOTE: credits to the sample Teller app
@@ -369,6 +421,7 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
 
     }
 
+    //EFFECTS: enable the program to play wave files
     public void playSound(File sound) {
         try {
             Clip clip = AudioSystem.getClip();
@@ -390,7 +443,6 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
     }
 
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -401,11 +453,13 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
 
     }
 
+    //EFFECTS: create a JOptionPane
     private void saveTaskPane() {
         JOptionPane.showMessageDialog(this, "Your current machine is saved!");
         System.out.println("saveTaskJOptionPane exit!");
     }
 
+    //EFFECTS: create a JOptionPane
     private void saveBalancePane() {
         JOptionPane.showMessageDialog(this, "Your current balance is saved!");
         System.out.println("saveBalanceJOptionPane exit!");
