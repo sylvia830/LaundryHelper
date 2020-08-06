@@ -62,8 +62,8 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
         super("Laundry Helper");
         //create a list that displays the list of unavailable machines
         tasks.setModel(listModel);
-        tasks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tasks.setSelectedIndex(0);
+        //tasks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //tasks.setSelectedIndex(0);
         tasks.addListSelectionListener(this);
         tasks.setVisibleRowCount(10);
         //create a new window
@@ -74,8 +74,6 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
         frame.setVisible(true);
         //content pane
         contentPane.setLayout(new BorderLayout());
-        label1.setFont(new Font("Arial", Font.BOLD, 20));
-        label1.setForeground(Color.BLUE);
         label1.setFont(new Font("Arial", Font.BOLD, 20));
         label1.setForeground(Color.BLUE);
         label2.setFont(new Font("Arial", Font.BOLD, 20));
