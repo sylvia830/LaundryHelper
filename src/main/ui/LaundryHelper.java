@@ -38,12 +38,14 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
     JScrollPane listScrollPane = new JScrollPane(tasks);
     JPanel panel = new JPanel();
     JPanel panel1 = new JPanel();
-    JLabel label1 = new JLabel("Manage your laundry card balance here");
+    JPanel panel2 = new JPanel();
+    JLabel label1 = new JLabel("Manage your laundry card balance here!");
     JButton addValue = new JButton("Add value");
     JTextField addValueBox = new JTextField(8);
     JButton pay = new JButton("Pay");
     JButton checkBalance = new JButton("Check balance");
-    JLabel label2 = new JLabel("Create a new laundry task here!");
+    JLabel label2 = new JLabel("Create a new laundry task here!(Note: if you wish to delete the current machine, "
+            + "do it before saving)");
     JButton deleteMyCurrentTask = new JButton("Delete my current task");
     JButton start = new JButton("Start");
     JTextField chooseMyMachine = new JTextField(10);
@@ -105,21 +107,22 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
         panel.add(saveMyCurrentBalance);
         panel.add(checkBalance);
         panel1.add(washingMachine);
-        panel1.add(label2);
         panel1.add(Box.createHorizontalStrut(10));
         panel1.add(new JSeparator(SwingConstants.HORIZONTAL));
         panel1.add(start);
         panel1.add(chooseMyMachine);
         panel1.add(listOfMachines);
         panel1.add(tasks);
-        panel1.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        //panel1.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel1.add(saveMyCurrentMachine);
         panel1.add(deleteMyCurrentTask);
-        contentPane.add(listScrollPane, BorderLayout.CENTER);
+        panel2.add(label2);
+        //contentPane.add(listScrollPane, BorderLayout.CENTER);
         contentPane.add(panel1, BorderLayout.PAGE_START);
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPane.add(panel, BorderLayout.PAGE_END);
-        contentPane.add(panel1);
+        contentPane.add(panel2,BorderLayout.PAGE_START);
+        contentPane.add(panel1,BorderLayout.CENTER);
     }
 
     //EFFECTS: initialise add value action listener
@@ -220,6 +223,7 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
     }
 
     //EFFECTS: start to play sound
+    //Note: the startSound .wav file was downloaded from SoundBible.com
     public void start() {
         System.out.println("You may start now!");
         System.out.println("Choose the machine you want to use: ");
