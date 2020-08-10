@@ -11,8 +11,6 @@ import java.util.LinkedList;
 public class TaskQueue {
     public static final int MAX_NUM = 10;
     public int machineID;
-    public LaundryCard card;
-    LaundryTask lt = new LaundryTask(machineID);
     LinkedList<LaundryTask> taskQueue;
     public String string;
 
@@ -93,7 +91,6 @@ public class TaskQueue {
             System.out.println(lt.getMachineID());
         }
         return machineID;
-        //return machineID;
     }
     
 }

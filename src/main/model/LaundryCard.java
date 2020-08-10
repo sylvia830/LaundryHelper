@@ -1,6 +1,6 @@
 package model;
 
-import persistence.Reader;
+import exception.NegativeNumberException;
 import persistence.Saveable;
 
 import java.io.PrintWriter;
@@ -30,10 +30,12 @@ public class LaundryCard implements Saveable {
     }
 
 
-    //REQUIRES: num > 0
     //MODIFIES: this
     //EFFECTS: add value to laundry card
-    public void addValue(int num) {
+    public void addValue(int num) throws NegativeNumberException {
+        if (num <= 0) {
+            throw new NegativeNumberException("cannot add negative amount to the balance");
+        }
         balance = balance + num;
     }
 
@@ -45,7 +47,7 @@ public class LaundryCard implements Saveable {
     @Override
     public void save(PrintWriter printWriter) {
         printWriter.print(balance);
-       // printWriter.print(Reader.DELIMITER);
+        // printWriter.print(Reader.DELIMITER);
         printWriter.println();
     }
 

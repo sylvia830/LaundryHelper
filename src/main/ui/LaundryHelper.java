@@ -1,5 +1,6 @@
 package ui;
 
+import exception.NegativeNumberException;
 import model.LaundryCard;
 import model.LaundryTask;
 import model.TaskQueue;
@@ -32,6 +33,7 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
     LaundryTask lt = new LaundryTask(1);
     private static final String CARDS_FILE = "./data/cards.txt";
     private static final String TASKS_FILE = "./data/tasks.txt";
+    //instantiate content pane elements
     DefaultListModel<Integer> listModel = new DefaultListModel<>();
     JList<Integer> tasks = new JList<>();
     JFrame frame = new JFrame("Laundry Helper");
@@ -60,7 +62,7 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
 
     //NOTE: credits to the sample Teller app
     //EFFECTS: runs the laundry helper application
-    public LaundryHelper() {
+    public LaundryHelper() throws NegativeNumberException {
         super("Laundry Helper");
         //create a list that displays the list of unavailable machines
         tasks.setModel(listModel);
@@ -121,8 +123,8 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
         contentPane.add(panel1, BorderLayout.PAGE_START);
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPane.add(panel, BorderLayout.PAGE_END);
-        contentPane.add(panel2,BorderLayout.PAGE_START);
-        contentPane.add(panel1,BorderLayout.CENTER);
+        contentPane.add(panel2, BorderLayout.PAGE_START);
+        contentPane.add(panel1, BorderLayout.CENTER);
     }
 
     //EFFECTS: initialise add value action listener
@@ -194,7 +196,12 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
     //EFFECTS: add value to current balance
     public void setAddValueBox() {
         String deposit = addValueBox.getText();
-        card.addValue(Integer.valueOf(deposit));
+        try {
+            card.addValue(Integer.valueOf(deposit));
+        } catch (NegativeNumberException e) {
+            System.out.println("Cannot add negative value!");
+            notifyNegativeValuePane();
+        }
         printBalance(card);
     }
 
@@ -214,7 +221,7 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
         }
     }
 
-    //REQUIRES: cannot delete after saving the machine to files
+    //REQUIRES: cannot delete the already saved task
     //MODIFIES: this
     //EFFECTS: delete the current machine
     public void deleteMyMachine() {
@@ -238,7 +245,7 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
     //NOTE: credits to the sample Teller app
     //MODIFIES: this
     //EFFECTS: processes user input
-    private void runLaundryHelper() {
+    private void runLaundryHelper() throws NegativeNumberException {
         boolean keepGoing = true;
         String command = null;
         input = new Scanner(System.in);
@@ -270,6 +277,7 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
         System.out.println("\tp -> Pay");
         System.out.println("\ts -> Start");
         System.out.println("\tm -> Check the list of unavailable machines(please choose this option after you start)");
+        System.out.println("\td -> Delete my current task");
         System.out.println("\tv -> Save my current balance");
         System.out.println("\tk -> Save my current machine");
         System.out.println("\tq -> Quit");
@@ -279,7 +287,7 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
     //NOTE: credits to the sample Teller app
     //MODIFIES: this
     //EFFECTS: processes user command
-    private void processCommand(String command) {
+    private void processCommand(String command) throws NegativeNumberException {
         if (command.equals("a")) {
             doAddValue();
         } else if (command.equals("c")) {
@@ -290,6 +298,8 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
             checkAvailability();
         } else if (command.equals("m")) {
             printMachineID();
+        } else if (command.equals("d")) {
+            tq.remove();
         } else if (command.equals("v")) {
             saveCards();
         } else if (command.equals("k")) {
@@ -351,11 +361,10 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
     private void doAddValue() {
         System.out.println("Enter an amount to deposit (in cents):");
         int num = input.nextInt();
-
-        if (num >= 0) {
+        try {
             card.addValue(num);
-        } else {
-            System.out.println("Cannot add negative amount...\n");
+        } catch (NegativeNumberException e) {
+            System.out.println("Cannot add negative value!");
         }
         printBalance(card);
     }
@@ -465,6 +474,11 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
     private void saveBalancePane() {
         JOptionPane.showMessageDialog(this, "Your current balance is saved!");
         System.out.println("saveBalanceJOptionPane exit!");
+    }
+
+    private void notifyNegativeValuePane() {
+        JOptionPane.showMessageDialog(this, "Cannot add negative value! Please try again!");
+        System.out.println("notifyNegativeValuePane exit!");
     }
 
 

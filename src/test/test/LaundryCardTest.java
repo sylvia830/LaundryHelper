@@ -1,5 +1,6 @@
 package test;
 
+import exception.NegativeNumberException;
 import model.LaundryCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ class LaundryCardTest {
     }
 
     @Test
-    public void testPay(){
+    public void testPay() throws NegativeNumberException {
         card.addValue(200);
         card.payFees();
         assertEquals(card.getBalance(), 75);
@@ -27,10 +28,28 @@ class LaundryCardTest {
 
     @Test
     public void testAddValue(){
-        card.addValue(100);
-        assertEquals(card.getBalance(), 100);
-        card.addValue(10);
+        try {
+            card.addValue(100);
+            card.addValue(10);
+        } catch (NegativeNumberException e) {
+            fail("not expecting this exception");
+
+        }
         assertEquals(card.getBalance(), 110);
+    }
+
+
+    @Test
+    public void testAddNegativeValue(){
+        try {
+            card.addValue(100);
+            card.addValue(-10);
+            fail("not expecting to reach this line of code");
+        } catch (NegativeNumberException e) {
+            //expected
+        }
+        assertEquals(card.getBalance(),100);
+
     }
 
     @Test

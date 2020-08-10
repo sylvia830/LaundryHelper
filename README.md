@@ -26,6 +26,7 @@ User Stories:
 - As a user, I want to be able to check the availability of the washing machines.
 - As a user, I want to be able to pay for the service using my laundry card.
 - As a user, I want to be able to check the balance on my account and add value to it.
+- As a user, I want to be able to delete my current task (cannot delete the saved one).
 - As a user, I want to be able to save my card balance to the file.
 - As a user, I want to be able to load my card balance from the file.
 - As a user, I want to be able to save my current machineId to the file and load it afterwards.
@@ -49,4 +50,10 @@ you'll see the machineID already there in the list).
 - You can locate the pop-up dialog by clicking on "Save my current machine" and "Save my current balance" buttons.
 - You can click on "Add Value" button first and enter the amount in the text field right next to it to add value to 
 your balance (remember to press "enter" after the input to add value successfully).
+
+Phase 4: Task 2
+- Option 1: test and design a robust class
+- In LaundryCard class, an exception is thrown in addValue method when num is less than or equal to 0.
+- In LaundryCardTest, testAddValue tested the case where the exception is not expected and testAddNegativeValue tested 
+the case where the exception is expected.
 
