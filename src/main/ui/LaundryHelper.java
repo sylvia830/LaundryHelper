@@ -3,7 +3,7 @@ package ui;
 import exception.NegativeNumberException;
 import model.LaundryCard;
 import model.LaundryTask;
-import model.TaskQueue;
+import model.TaskQueueManager;
 import persistence.Reader;
 import persistence.ReaderTask;
 import persistence.Writer;
@@ -26,7 +26,8 @@ import static model.LaundryCard.AMOUNT;
 
 //laundry helper application
 public class LaundryHelper extends JFrame implements ActionListener, ListSelectionListener {
-    TaskQueue tq = new TaskQueue();
+    //TaskQueue tq = new TaskQueue();
+    TaskQueueManager tqm = new TaskQueueManager();
     LinkedList<LaundryTask> taskQueue = new LinkedList<LaundryTask>();
     private Scanner input;
     LaundryCard card = new LaundryCard(0);
@@ -208,11 +209,11 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
     //MODIFIES: this
     //EFFECTS: check machine availability and choose a machine if available
     public void chooseMyMachine() {
-        if (tq.isAvailable()) {
+        if (tqm.isAvailable()) {
             int machineID = Integer.valueOf(chooseMyMachine.getText());
             lt = new LaundryTask(machineID);
-            System.out.println(tq.noDuplicates(machineID));
-            tq.addTask(lt);
+            System.out.println(tqm.noDuplicates(machineID));
+            tqm.addTask(lt);
             if (!listModel.contains(Integer.valueOf(chooseMyMachine.getText()))) {
                 listModel.addElement(Integer.parseInt(chooseMyMachine.getText()));
             }
@@ -226,7 +227,7 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
     //EFFECTS: delete the current machine
     public void deleteMyMachine() {
         listModel.removeElementAt(listModel.size() - 1);
-        tq.remove();
+        tqm.remove();
     }
 
     //EFFECTS: start to play sound
@@ -276,7 +277,7 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
         System.out.println("\tc -> Check balance");
         System.out.println("\tp -> Pay");
         System.out.println("\ts -> Start");
-        System.out.println("\tm -> Check the list of unavailable machines(please choose this option after you start)");
+        System.out.println("\tm -> Check the list of unavailable machines");
         System.out.println("\td -> Delete my current task");
         System.out.println("\tv -> Save my current balance");
         System.out.println("\tk -> Save my current machine");
@@ -299,7 +300,7 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
         } else if (command.equals("m")) {
             printMachineID();
         } else if (command.equals("d")) {
-            tq.remove();
+            tqm.remove();
         } else if (command.equals("v")) {
             saveCards();
         } else if (command.equals("k")) {
@@ -313,7 +314,7 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
     //MODIFIES: this
     //EFFECTS: check if there are available machines right now and if there is, choose a machine
     private void checkAvailability() {
-        if (tq.isAvailable()) {
+        if (tqm.isAvailable()) {
             System.out.println("You may start now!");
             System.out.println("Choose the machine you want to use: ");
             System.out.println("(washing machine ID: 1-7, dryer ID: 8-10)");
@@ -321,8 +322,8 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
                     + "then your choice is available. Please press 'p' to proceed.");
             int machineID = input.nextInt();
             lt = new LaundryTask(machineID);
-            System.out.println(tq.noDuplicates(machineID));
-            tq.addTask(lt);
+            System.out.println(tqm.noDuplicates(machineID));
+            tqm.addTask(lt);
         } else {
             System.out.println("The machines are occupied. Please swing by later!");
         }
@@ -330,11 +331,11 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
 
     //EFFECTS: print out a list of the unavailable machines
     private void printMachineID() {
-        if (tq.noTask()) {
+        if (tqm.noTask()) {
             System.out.println("There is no ongoing task. Please press 's' to begin.");
         } else {
             System.out.println("The machines in use right now are  ");
-            tq.print();
+            tqm.print();
         }
     }
 
@@ -394,7 +395,7 @@ public class LaundryHelper extends JFrame implements ActionListener, ListSelecti
         try {
             taskQueue = ReaderTask.readLaundryTask(new File(TASKS_FILE));
             lt = taskQueue.get(0);
-            tq.addTask(lt);
+            tqm.addTask(lt);
             listModel.addElement(lt.getMachineID());
         } catch (IOException e) {
             init();

@@ -87,26 +87,11 @@ public class TaskQueueTest {
     }
 
     @Test
-    public void noDuplicates() {
-        tq.addTask(lt);
-        tq.addTask(lt1);
-        tq.noDuplicates(0);
-        assertEquals(2,tq.size());
-        tq.noDuplicates(1);
-        assertEquals(1,tq.size());
-    }
-
-    @Test
     public void testSize(){
         assertEquals(0, tq.size());
         tq.addTask(lt);
         assertEquals(1,tq.size());
     }
 
-    @Test
-    public void testPrint(){
-        tq.addTask(lt);
-        assertEquals(0, tq.print());
-    }
 
 }

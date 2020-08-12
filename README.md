@@ -57,3 +57,17 @@ Phase 4: Task 2
 - In LaundryCardTest, testAddValue tested the case where the exception is not expected and testAddNegativeValue tested 
 the case where the exception is expected.
 
+Phase 4: Task 3
+-In an older version of LaundryHelper, the operations on the list of occupied machines are maintained by using a 
+TaskQueue as well as a linkedList. At that stage, printing the list, checking and eradicating duplicates are managed by 
+iterating through the LinkedList version of the queue since I cannot achieve these using only TaskQueue. So there were 
+two linked lists in my ui - one is represented by TaskQueue, the other is the linkedList, which has introduced a lot 
+of redundancy in my code as I have to add/remove an object twice to get the expected behaviours. In the end, the 
+iteration part of the methods ended up being refactored to TaskQueue, so that the extra linkedList can be removed, and 
+the corresponding chunks in the methods can be called from TaskQueue (now from TaskQueueManager).
+-The cohesion is poor in the original version of TaskQueue class, where it tries to handle remove duplication and print 
+a list of occupied machines beside basic add, remove, and isAvailable. So I moved noDuplicates and print method to a 
+new class named TaskQueueManager which extends TaskQueue and deals with duplicates check and remove as well as print the
+list of machines with no duplicates.
+
+
