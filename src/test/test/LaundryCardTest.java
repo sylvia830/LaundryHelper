@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-//test for laundry card
+//test for laundry card class
 class LaundryCardTest {
     LaundryCard card;
     public static int AMOUNT = 125;
